@@ -40,17 +40,26 @@ class ScrapingCommand extends Command
     public function handle()
     {
         // スクレイピングを実行してDBへ格納する処理
-        $html = file_get_contents("http://qiita.com/api/v2/items?page=1&per_page=50");
-        
-        // Qiita API内の情報をjson形式に整形してforeachでぶん回す
-        foreach(json_decode($html) as $article){
+        // 未認証だと1時間に60アクセスが上限のため60指定
+        for($i=1; $i <= 60; $i++){
 
-            // 各カラムにデータを保存
-            $qiita = new Article;
-            $qiita->src = 1; // 1 はQiitaの記事
-            $qiita->airline = $article->title;
-            $qiita->url = $article->url;
-            $qiita->save();
+            // for文で60ページ分を取得
+            $url = "http://qiita.com/api/v2/items?page={$i}&per_page=100";
+            $context = stream_context_create(array('http' => array(
+                "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+              )));
+            $html = file_get_contents($url, false, $context);
+            
+            // Qiita API内の情報をjson形式に整形してforeachでぶん回す
+            foreach(json_decode($html) as $article){
+
+                // 各カラムにデータを保存
+                $qiita = new Article;
+                $qiita->src = 1; // 1 はQiitaの記事
+                $qiita->airline = $article->title;
+                $qiita->url = $article->url;
+                $qiita->save();
+            }
         }
 
 
