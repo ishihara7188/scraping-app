@@ -18,9 +18,19 @@
             <h1>Scraping app</h1>
 
             <form action="" method="">
-                <input type="text" name="">
-                <input type="submit">
+                <input type="text" name="keyword" value="{{ $keyword }}">
+                <input type="submit" value="検索">
             </form>
+
+            @if(count($articles) > 0)
+                <div class="row">
+                    @foreach($articles as $article)
+                        <div class="col-md-3">
+                        <a href="{{ $article->url }}">{{ $article->airline }}</a>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </body>
 </html>
