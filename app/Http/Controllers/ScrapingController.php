@@ -12,21 +12,30 @@ class ScrapingController extends Controller
     {
         // viewのformから送られてきたkeywordを取得
         $keyword = $request->input('keyword');
+        // 複数検索に対応させるため、空白で文字を分断
+        $words = explode(" ", $keyword);
 
-        // formに入力されて入れば
-        if(!empty($keyword))
+        // form入力確認をしてDBから検索
+        if(!empty($words))
         {   
-            // DBの絡むから検索
-            $articles = DB::table('articles')
-                        ->where('airline', 'like', '%'.$keyword.'%')
-                        ->paginate(4);
-        }else{ // formに入力がなければ
-            $articles = DB::table('artticles')->paginate(4);
+            $articles = DB::table('articles');
+            foreach ($words as $word) {
+                    $articles->where('airline', 'like', '%'.$word.'%');
+            } 
+            $articles->paginate(100);
         }
+
+        // あらかじめ決まったキーワードを検索
+        $ruby = DB::table('articles')->where('airline', 'like', '%'.'ruby'.'%')->get();
+        $php = DB::table('articles')->where('airline', 'like', '%'.'php'.'%')->get();
+        $python = DB::table('articles')->where('airline', 'like', '%'.'python'.'%')->get();
 
         return view('index', [
             'keyword' => $keyword,
-            'articles' => $articles
+            'articles' => $articles->get(),
+            'ruby' => $ruby,
+            'php' => $php,
+            'python' => $python
         ]);
     }
 }

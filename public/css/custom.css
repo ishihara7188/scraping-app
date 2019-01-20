@@ -6,3 +6,38 @@ body{
     width: 80%;
     margin: 0 auto;
 }
+
+.type-box{
+    width: 400px;
+    height: 35px;
+    font-size: 100%;
+    border-radius: 5px;
+}
+
+.type-btn{
+    width:80px;
+    height: 39px;
+    display:inline-block;
+    background:tomato;
+    color:#fff;
+    border-radius:5px;
+}
+
+.type-btn:hover{
+    background:#fff;
+    color:tomato;
+    cursor: pointer;
+}
+
+.form-position{
+    /* width: 100%; */
+    margin: 0 auto;
+}
+
+.article-box{
+    margin-top:24px;
+}
+
+.articles-folder{
+    display: flex;
+}
