@@ -39,10 +39,12 @@ class ScrapingCommand extends Command
      */
     public function handle()
     {
+
+        // Qiita記事のスクレイピング処理
+
         // スクレイピングを実行してDBへ格納する処理
         // 未認証だと1時間に60アクセスが上限のため60指定
         for($i=1; $i <= 60; $i++){
-
             // for文で60ページ分を取得
             $url = "http://qiita.com/api/v2/items?page={$i}&per_page=100";
             $context = stream_context_create(array('http' => array(
@@ -58,45 +60,27 @@ class ScrapingCommand extends Command
                 $qiita->src = 1; // 1 はQiitaの記事
                 $qiita->airline = $article->title;
                 $qiita->url = $article->url;
-                $qiita->save();
+                // $qiita->save();
             }
         }
 
 
-        // $html = file_get_contents("https://qrunch.net/");
-        // // preg_match_all("/<div class=\"entry-info\">\n<div class=\"title\">\n<a href=\"(.*)\"\s/", $html, $matches);
-        // $matches = preg_match_all("/<div class=\"entry-info\">\n<div class=\"title\"\s/", $html);
+
         
-        // $text = \phpQuery::newDocument($matches)->find("h3")->text();
-        
-        // var_dump($text);
-        // var_dump($matches);
+        // Crunch記事のスクレイピング処理
 
-        $html = file_get_contents("https://qrunch.net/");
-        preg_match_all('/<div class=\"entry-info\">\n<div class=\"title\">\n<a href=\"(.*)\"\spl=\"content\">\n(.*)/', $html, $matches);
-        
-        // var_dump($matches);  
-
-
-//         $html = file_get_contents("https://qrunch.net/entries");
-// preg_match($html)
-
-//         // $text = \phpQuery::newDocument($html)->find("div.more")->attr("href")->text();
-//         // $article = json_decode($html);
-//         // Qiita API内の情報をjson形式に整形してforeachでぶん回す
-        for($i=0; $i < count($matches[1]); $i++){
-            // 各カラムにデータを保存
-            $crunch = new Article;
-            $crunch->src = 2;
-            $crunch->airline = $matches[2][$i];
-            $crunch->url = $matches[1][$i];
-            var_dump($crunch); 
-            // $crunch->save();
-        }
-// var_dump($text);
-
+        for ($i=1; $i <= 100; $i++ ){
+            $urlCrunch = "https://qrunch.net/entries?page={$i}";
+            $htmlCrunch = file_get_contents($urlCrunch);
+            preg_match_all('/<div class=\"title\">\n<a href=\"(.*)\">\n<h3>(.*)</', $htmlCrunch, $matches);
             
-//         // }
-
+            for ($a=0; $a < count($matches[1]); $a++){
+                $crunch = new Article;
+                $crunch->src = 2;
+                $crunch->airline = $matches[2][$a];
+                $crunch->url = $matches[1][$a];
+                // $crunch->save();
+            }
+        }
     }
 }

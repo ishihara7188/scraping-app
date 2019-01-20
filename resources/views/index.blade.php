@@ -25,17 +25,36 @@
             <br>
             <h2>検索結果</h2>
             <hr>
-            @if(count($articles) > 0)
-                <div class="article-box">
-                    @foreach($articles as $article)
-                        <div class="articles">
-                            <a href="{{ $article->url }}">{{ $article->airline }}</a>
+            <div class="qr-box">
+                <div class="qiita">
+                    <h3>Qiita</h3>
+                    @if(count($qiita) > 0)
+                        <div class="article-box">
+                            @foreach($qiita as $q)
+                                <div class="qiita">
+                                    <a href="{{ $q->url }}">{{ $q->airline }}</a>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    @else
+                        <p>検索結果　0件</p>
+                    @endif
                 </div>
-            @else
-                <p>検索結果　0件</p>
-            @endif
+                <div class="crunch">
+                    <h3>Crunch</h3>
+                    @if(count($crunch) > 0)
+                        <div class="article-box">
+                            @foreach($crunch as $c)
+                                <div class="qiita">
+                                    <a href="{{ $c->url }}">{{ $c->airline }}</a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p>検索結果　0件</p>
+                    @endif
+                </div>
+            </div>
 
 
 

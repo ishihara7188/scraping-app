@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('command:scrapingcommand')->weekly();
+        $schedule->command('command:scrapingcommand')->weekly()->mondays()->at('13:00');
     }
 
     /**

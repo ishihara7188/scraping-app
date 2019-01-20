@@ -18,11 +18,19 @@ class ScrapingController extends Controller
         // form入力確認をしてDBから検索
         if(!empty($words))
         {   
-            $articles = DB::table('articles');
+            $qiita = DB::table('articles');
             foreach ($words as $word) {
-                    $articles->where('airline', 'like', '%'.$word.'%');
+                    $qiita->where('airline', 'like', '%'.$word.'%');
+                    $qiita->where('src', 1);
             } 
-            $articles->paginate(100);
+            $qiita->paginate(100);
+
+            $crunch = DB::table('articles');
+            foreach ($words as $word) {
+                    $crunch->where('airline', 'like', '%'.$word.'%');
+                    $crunch->where('src', 2);
+            } 
+            $crunch->paginate(100);
         }
 
         // あらかじめ決まったキーワードを検索
@@ -32,7 +40,8 @@ class ScrapingController extends Controller
 
         return view('index', [
             'keyword' => $keyword,
-            'articles' => $articles->get(),
+            'qiita' => $qiita->get(),
+            'crunch' => $crunch->get(),
             'ruby' => $ruby,
             'php' => $php,
             'python' => $python
