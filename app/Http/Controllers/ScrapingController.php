@@ -23,14 +23,14 @@ class ScrapingController extends Controller
                     $qiita->where('airline', 'like', '%'.$word.'%');
                     $qiita->where('src', 1);
             } 
-            $qiita->paginate(100);
+            $qiita->get();
 
             $crunch = DB::table('articles');
             foreach ($words as $word) {
                     $crunch->where('airline', 'like', '%'.$word.'%');
                     $crunch->where('src', 2);
             } 
-            $crunch->paginate(100);
+            $crunch->get();
         }
 
         // あらかじめ決まったキーワードを検索

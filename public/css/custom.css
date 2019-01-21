@@ -1,23 +1,48 @@
-body{
-    color: tomato;
+/* body{
+    
+} */
+
+h1,h2,h3{
+    font-family: 'Lekton', sans-serif;
+    font-style: normal;
 }
 
-.container{
-    width: 80%;
-    margin: 0 auto;
+p{
+    font-size: 13px;
+    text-align: center;
+}
+
+h1{
+    margin: 24px 0 10px 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+.form-align{
+    width: 100%;
+}
+
+.qiita h2{
+    text-align: center;
+    color: rgb(0, 189, 0);
+}
+
+.qrunch h2{
+    text-align: center;
+    color: teal;
 }
 
 .type-box{
-    width: 400px;
-    height: 35px;
+    padding-left: 5px;
+    width: 280px;
+    height: 40px;
     font-size: 100%;
     border-radius: 5px;
 }
 
 .type-btn{
-    width:80px;
-    height: 39px;
-    display:inline-block;
+    font-size: 15px;
+    height: 100%;
     background:tomato;
     color:#fff;
     border-radius:5px;
@@ -29,19 +54,42 @@ body{
     cursor: pointer;
 }
 
-.form-position{
-    /* width: 100%; */
-    margin: 0 auto;
+.articles-folder{
+    display: flex;
+    margin-top: 30px;
+}
+
+.q-box{
+    display: flex;
+}
+
+.qiita, .qrunch{
+    width: 50%;
 }
 
 .article-box{
-    margin-top:24px;
+    padding: 10px;
+    margin: 0 2px 30px;
+    border: solid 0.5px rgb(255, 199, 189);
+    height: 600px;
+    overflow-y: scroll;
 }
 
-.articles-folder{
-    display: flex;
+a{
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #424242;
+    text-decoration: none;
 }
 
-.qr-box{
-    display: flex;
+a:hover{
+    color: #9e9e9e;
+    text-decoration: underline;
+}
+
+footer{
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
 }
